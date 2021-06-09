@@ -1,8 +1,11 @@
-import { configureStore } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
+import { createStore, applyMiddleware, compose } from 'redux';
+import reposReducer from './reducer';
+import thunk from "redux-thunk";
 
-export const store = configureStore({
-  reducer: {
-    counter: counterReducer,
-  },
-});
+const enableReduxDevTools = window.__REDUX_DEVTOOLS_EXTENSION__?.();
+const enhancers = [enableReduxDevTools, applyMiddleware(thunk)];
+export const store = createStore(
+  reposReducer,
+  compose(...enhancers)
+);
+
