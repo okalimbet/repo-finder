@@ -1,11 +1,11 @@
 import React from 'react';
-import HeaderForm from '../HeaderForm/HeaderForm';
+import HomePage from '../HomePage/HomePage';
 import './App.css';
 
 function App() {
   return (
     <main className="App">
-      <HeaderForm/>
+      <HomePage/>
     </main>
   );
 }
