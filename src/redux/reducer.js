@@ -11,8 +11,8 @@ const initialState = {
   page: '',
   repoName: '',
   sortType: '',
-  languge: '',
-  keyword: '',
+  language: '',
+  keywords: '',
   loading: false,
   error: null
 };
