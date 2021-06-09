@@ -8,6 +8,7 @@ const initialState = {
   repos: [],
   repoDetails: {},
   owner: '',
+  page: '',
   repoName: '',
   sortType: '',
   languge: '',
@@ -44,9 +45,10 @@ export default function reposReducer(state = initialState, action) {
       case SET_QUERIES:
       return {
         ...state,
-        language: 'language:' + action.payload.language || '',
-        page: '&page=' + action.payload.page || '',
-        keywords: '&q=' + action.payload.keywords || ''
+        language: action.payload.queries.language,
+        page: action.payload.queries.page,
+        keywords: action.payload.queries.keywords,
+        sortType: action.payload.queries.sortType,
       };
 
     case FETCH_FAILURE:
