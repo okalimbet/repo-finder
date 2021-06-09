@@ -46,6 +46,22 @@ const HeaderForm = () => {
           <TextField id="standard-search" onChange={(e) => handleChange(e)} name={"page"} label="Page..." type="search" />
           <Button type="submit" color="primary">Submit</Button>
       </form>
+      <FormControl onSubmit={(e) => handleSubmit(e)}>
+        <InputLabel id="sort"></InputLabel>
+        <Select
+          labelId="sort"
+          id="sort"
+          displayEmpty
+          value={query.sortType}
+          onChange={(e) => handleSortChange(e)}
+        >
+          <MenuItem value="">
+            <em>Best Match</em>
+          </MenuItem>
+          <MenuItem value={"stars"}>Stars</MenuItem>
+        </Select>
+        <FormHelperText>Sort By</FormHelperText>
+      </FormControl>
     </section>
   )
 }
