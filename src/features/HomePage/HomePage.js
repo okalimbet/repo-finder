@@ -4,7 +4,7 @@ import RepoList from '../RepoList/RepoList'
 const HomePage = (props) => {
 
   return(
-    <section>
+    <section className="homepage-container">
       <HeaderForm/>
       <RepoList/>
     </section>
