@@ -28,11 +28,17 @@ p.small-card-details {
 }
 
 .repo-list-container > h2{
-  margin-bottom: 2em;
+  margin-bottom: 0.5em;
 }
 
 h3.card-repo-name {
   overflow-wrap: anywhere;
+}
+
+.message-tip {
+  font-size: 0.7em;
+  margin-bottom: 2em;
+  text-align: left;
 }
 
 @media (max-width: 700px) {
@@ -43,7 +49,7 @@ h3.card-repo-name {
     justify-content: center;
   }
   .repo-list-container > h2{
-    margin-bottom: 1.5em;
+    margin-bottom: 0.5em;
     font-size: 1.3em;
   }
 
@@ -53,5 +59,10 @@ h3.card-repo-name {
 
   p.small-card-details {
     font-size: 0.8em;
+  }
+
+  .message-tip {
+    font-size: 0.4em;
+    text-align: center;
   }
 }
