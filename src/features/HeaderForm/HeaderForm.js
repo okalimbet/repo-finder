@@ -48,7 +48,7 @@ const HeaderForm = () => {
       let pageInput = `&page=${query.page}`;
       let inputInfo = nameInput+languageInput+pageInput+sortTypeInput;
       dispatch(fetchBegin(true));
-      await axios.get(`${baseUrl}${inputInfo}`)
+      await axios.get(`${baseUrl}search/repositories?&order=desc${inputInfo}`)
         .then(res =>
           {
             dispatch(fetchRepoData(res.data))
