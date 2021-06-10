@@ -1,0 +1,36 @@
+.stargazing-container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.stargazing-box {
+  display: flex;
+  width: 100%;
+}
+
+p.small-card-details {
+  display: flex;
+  align-items: center;
+  margin-left: 0.5em;
+}
+
+.cards-holder {
+  width: 98%;
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.repo-list-container {
+  padding: 1%;
+}
+
+.repo-list-container > h2{
+  margin-bottom: 2em;
+}
+
+h3.card-repo-name {
+  overflow-wrap: anywhere;
+}
