@@ -1,7 +1,7 @@
 import HeaderForm from '../HeaderForm/HeaderForm'
 import RepoList from '../RepoList/RepoList'
 import SingleRepoPreview from '../SingleRepoPreview/SingleRepoPreview'
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import './HomePage.css'
 
 const HomePage = (props) => {
