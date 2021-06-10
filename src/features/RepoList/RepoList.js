@@ -8,7 +8,8 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import StarIcon from '@material-ui/icons/Star';
-
+import { setUserData } from '../../redux/actions';
+ 
 const useStyles = makeStyles({
   root: {
     minWidth: 275,
@@ -32,10 +33,13 @@ const RepoList = (props) => {
 
   const classes = useStyles();
   const repos = useSelector(state => state.repos);
+  const dispatch = useDispatch();
 
   const handleRepoClick = (e, repoName, owner) => {
-    console.log("It's me card")
-    console.log(`${repoName} - ${owner}`)
+    dispatch(setUserData({
+      owner,
+      repoName
+    }))
   }
 
   if(!repos.items) {
