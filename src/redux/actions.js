@@ -25,6 +25,7 @@ export const fetchFailure = error => ({
   payload: { error }
 });
 
-export const fetchBegin = () => ({
-  type: FETCH_BEGIN
+export const fetchBegin = (loading) => ({
+  type: FETCH_BEGIN,
+  payload: {loading}
 });
