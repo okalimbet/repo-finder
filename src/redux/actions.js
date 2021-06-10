@@ -4,6 +4,7 @@ export const FETCH_FAILURE = 'FETCH_FAILURE';
 export const FETCH_BEGIN = 'FETCH_BEGIN';
 export const SET_QUERIES = 'FETCH_SET_QUERIES';
 export const SET_USER_DATA = 'SET_USER_DATA';
+export const SET_KEYWORDS = 'SET_KEYWORDS';
 
 export const fetchRepoData = (repos) => ({
   type: FETCH_REPO_DATA,
@@ -13,6 +14,11 @@ export const fetchRepoData = (repos) => ({
 export const setQueries = (queries) => ({
   type: SET_QUERIES,
   payload: { queries }
+});
+
+export const setKeywords = (keyword) => ({
+  type: SET_KEYWORDS,
+  payload: { keyword }
 });
 
 export const fetchRepoDataDetails = (details) => ({

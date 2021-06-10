@@ -4,7 +4,7 @@ export const FETCH_FAILURE = 'FETCH_FAILURE';
 export const FETCH_BEGIN = 'FETCH_BEGIN';
 export const SET_QUERIES = 'FETCH_SET_QUERIES';
 export const SET_USER_DATA = 'SET_USER_DATA';
-
+export const SET_KEYWORDS  = 'SET_KEYWORDS';
 const initialState = {
   repos: [],
   repoDetails: null,
@@ -48,8 +48,13 @@ export default function reposReducer(state = initialState, action) {
         ...state,
         language: action.payload.queries.language,
         page: action.payload.queries.page,
-        keywords: action.payload.queries.keywords,
         sortType: action.payload.queries.sortType,
+      };
+
+    case SET_KEYWORDS:
+      return {
+          ...state,
+          keyword: action.payload.keyword.keyword,
       };
 
     case SET_USER_DATA:
