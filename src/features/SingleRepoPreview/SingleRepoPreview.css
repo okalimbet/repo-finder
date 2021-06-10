@@ -32,16 +32,20 @@
   font-size: 2.5em;
 }
 
-.repo-description {
-  font-size: 2em;
+p.repo-description {
+  font-size: 1em;
+  word-wrap: break-word;
+  width: auto;
+  margin: 1em 0;
 }
 
 .repo-stargazing-container{
   display: flex;
   width: 100%;
+  margin-top: 1em;
 }
 
-.repo-details {
+p.repo-details {
   display: flex;
   align-items: center;
   margin-left: 0.8em;
@@ -53,6 +57,21 @@
   margin-top: 2em;
   align-items: center;
   justify-content: center;
+}
+
+.github-icon-link {
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+}
+
+.github-icon-link:hover {
+  transform: scale(1.1);
+}
+
+.github-icon > a {
+  width: fit-content;
+  text-decoration: none;
+  color: inherit;
 }
 
 .arrow-back-circle {
@@ -68,4 +87,32 @@
 
 .arrow-back-circle:hover {
   transform: scale(1.1);
+}
+
+@media (max-width: 700px) {
+  .repo-fullname {
+    font-size: 1em;
+  }
+  
+  .repo-owner {
+    font-size: 1.8em;
+  }
+  
+  p.repo-description {
+    font-size: 0.8em;
+  }
+  
+  .stargazing-container{
+    display: flex;
+    width: 100%;
+    margin-top: 1em;
+  }
+  
+  p.repo-details {
+    display: flex;
+    align-items: center;
+    font-size: 0.8em;
+    margin-left: 0.5em;
+  }
+  
 }
