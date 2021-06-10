@@ -1,0 +1,71 @@
+.single-repo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+.single-repo-container > div:nth-child(1){
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: fit-content;
+  width: 100%;
+}
+
+.single-repo-wrapper {
+  flex-wrap: wrap;
+  min-width: 200px;
+  min-height: 300px;
+  width: 50%;
+  height: fit-content;
+}
+
+.repo-fullname {
+  font-size: 3.2vw;
+  word-wrap: break-word;
+}
+
+.repo-owner {
+  font-size: 2.5em;
+}
+
+.repo-description {
+  font-size: 2em;
+}
+
+.repo-stargazing-container{
+  display: flex;
+  width: 100%;
+}
+
+.repo-details {
+  display: flex;
+  align-items: center;
+  margin-left: 0.8em;
+}
+
+.github-icon {
+  width: 100%;
+  display: flex;
+  margin-top: 2em;
+  align-items: center;
+  justify-content: center;
+}
+
+.arrow-back-circle {
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  height: 3em;
+  width: 3em;
+  transition: all .2s ease-in-out;
+}
+
+.arrow-back-circle:hover {
+  transform: scale(1.1);
+}
