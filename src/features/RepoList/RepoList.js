@@ -50,7 +50,7 @@ const RepoList = (props) => {
         <h2>Total Count: {repos.total_count}</h2>
         {
           repos.total_count > 1000 && 
-          <p className="message-tip">The search provides only up tp 1,000 results. To help us to narrow down your search please provide us a little more infromation!</p>
+          <p className="message-tip">The search displays only up tp 1,000 results. To help us to narrow down your search please provide us a little more infromation!</p>
         }
         <div className="cards-holder">
           {
