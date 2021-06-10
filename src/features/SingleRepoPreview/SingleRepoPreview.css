@@ -1,0 +1,118 @@
+.single-repo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+.single-repo-container > div:nth-child(1){
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: fit-content;
+  width: 100%;
+}
+
+.single-repo-wrapper {
+  flex-wrap: wrap;
+  min-width: 200px;
+  min-height: 300px;
+  width: 50%;
+  height: fit-content;
+}
+
+.repo-fullname {
+  font-size: 3.2vw;
+  word-wrap: break-word;
+}
+
+.repo-owner {
+  font-size: 2.5em;
+}
+
+p.repo-description {
+  font-size: 1em;
+  word-wrap: break-word;
+  width: auto;
+  margin: 1em 0;
+}
+
+.repo-stargazing-container{
+  display: flex;
+  width: 100%;
+  margin-top: 1em;
+}
+
+p.repo-details {
+  display: flex;
+  align-items: center;
+  margin-left: 0.8em;
+}
+
+.github-icon {
+  width: 100%;
+  display: flex;
+  margin-top: 2em;
+  align-items: center;
+  justify-content: center;
+}
+
+.github-icon-link {
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+}
+
+.github-icon-link:hover {
+  transform: scale(1.1);
+}
+
+.github-icon > a {
+  width: fit-content;
+  text-decoration: none;
+  color: inherit;
+}
+
+.arrow-back-circle {
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  height: 3em;
+  width: 3em;
+  transition: all .2s ease-in-out;
+}
+
+.arrow-back-circle:hover {
+  transform: scale(1.1);
+}
+
+@media (max-width: 700px) {
+  .repo-fullname {
+    font-size: 1em;
+  }
+  
+  .repo-owner {
+    font-size: 1.8em;
+  }
+  
+  p.repo-description {
+    font-size: 0.8em;
+  }
+  
+  .stargazing-container{
+    display: flex;
+    width: 100%;
+    margin-top: 1em;
+  }
+  
+  p.repo-details {
+    display: flex;
+    align-items: center;
+    font-size: 0.8em;
+    margin-left: 0.5em;
+  }
+  
+}
