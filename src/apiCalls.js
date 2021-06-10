@@ -1,1 +1,1 @@
-export const baseUrl ='https://api.github.com/search/repositories?&order=desc'
+export const baseUrl ='https://api.github.com/'
