@@ -29,22 +29,18 @@ const useStyles = makeStyles({
 });
 
 const RepoList = (props) => {
-  const classes = useStyles();
-  const dispatch = useDispatch();
-  const repos = useSelector(state => state.repos);
-  const [reposList, setReposList] = useState(null)
-  const keywords = useSelector(state => state.keywords);
-  const language = useSelector(state => state.language);
-  const sortType = useSelector(state => state.sortType);
 
-useEffect( async ()=> {
-  await repos;
-}, [repos])
+  const classes = useStyles();
+  const repos = useSelector(state => state.repos);
+
+  const handleRepoClick = (e, repoName, owner) => {
+    console.log("It's me card")
+    console.log(`${repoName} - ${owner}`)
+  }
 
   if(!repos.items) {
     return null
   } else {
-    console.log(repos)
     return(
       <section className="repo-list-container">
         <h2>Total Count: {repos['total_count']}</h2>
@@ -52,7 +48,7 @@ useEffect( async ()=> {
           {
             repos.items.map(oneRepo => {
               return(
-                <Card className={classes.root}>
+                <Card onClick={(e) => handleRepoClick(e, oneRepo.name, oneRepo.owner.login)} className={classes.root}>
                   <CardContent >
                   <Typography className="card-repo-name" noWrap={false} display="inline" variant="h5" component="h3">{oneRepo.name}</Typography>
                   <Typography className={classes.title} color="textSecondary" gutterBottom>{oneRepo.owner.login}</Typography>
@@ -73,6 +69,5 @@ useEffect( async ()=> {
     )
   } 
 }
-
 
 export default RepoList;

@@ -34,3 +34,24 @@ p.small-card-details {
 h3.card-repo-name {
   overflow-wrap: anywhere;
 }
+
+@media (max-width: 700px) {
+  .repo-list-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .repo-list-container > h2{
+    margin-bottom: 1.5em;
+    font-size: 1.3em;
+  }
+
+  h3.card-repo-name {
+    font-size: 1.2em;
+  }
+
+  p.small-card-details {
+    font-size: 0.8em;
+  }
+}
