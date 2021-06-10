@@ -172,7 +172,7 @@ const HeaderForm = () => {
               <FormHelperText>Sort By</FormHelperText>
             </FormControl>
           </div>
-          <Pagination count={Math.floor(repos.total_count/30)+1} page={query.page} onChange={handlePageChange} variant="outlined" shape="rounded" />
+          <Pagination count={repos.total_count > 1000 ? Math.floor(1000/30)+1 : Math.floor(repos.total_count/30)+1} page={query.page} onChange={handlePageChange} variant="outlined" shape="rounded" />
         </div>
       }
     </section>
