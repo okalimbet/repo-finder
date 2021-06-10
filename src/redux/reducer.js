@@ -7,7 +7,7 @@ export const SET_USER_DATA = 'SET_USER_DATA';
 
 const initialState = {
   repos: [],
-  repoDetails: {},
+  repoDetails: null,
   owner: '',
   page: '',
   repoName: '',
