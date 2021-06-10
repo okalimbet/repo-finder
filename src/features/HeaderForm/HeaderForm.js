@@ -18,86 +18,144 @@ const HeaderForm = () => {
     language: '',
     page: ''
   });
-const [btnDisabled, setBtnDisabled] = useState(true)
-const [queryInfo, setQueryInfo] = useState()
 
+const [languages, setLanguages] = useState()
+const [loading, setLoading] = useState(false)
   const dispatch = useDispatch();
+  const repos = useSelector(state => state.repos);
   const keywords = useSelector(state => state.keywords);
+  const sortType = useSelector(state => state.sortType);
+  // const loading = useSelector(state => state.loading);
+  // const error = useSelector(state => state.error);
   const language = useSelector(state => state.language);
-  const validateQuery = () => {
-    let info = {}
-      info.keywords=`&q=${query.keywords}` || ``;
-      info.language = `+language:${query.language}` || ``;
-      info.sortType = `&sort=${query.keywords}` || ``;
-    setQueryInfo(info)
-  }
 
-  const fetchData = async () => {
-    let results = []
+  const fetchData = async (page=1) => {
     if(keywords) {
-    results = Object.values(queryInfo).join('')
-
-    dispatch(fetchBegin());
-    await axios.get(`https://api.github.com/search/repositories?&order=desc${results}`)
-      .then(handleErrors)
-      .then(res => dispatch(fetchRepoData(res.data))
-      ).catch(error => dispatch(fetchFailure(error)))
-    // }
+      let nameInput = !keywords ? '' : `&q=${keywords}`;
+      let languageInput = !query.language ? '' : `+language:${query.language}`;
+      let sortTypeInput = !query.sortType ? '' : `&sort=${query.sortType}`;
+      let inputInfo = nameInput+languageInput+sortTypeInput
+    dispatch(fetchBegin(true));
+    await axios.get(`https://api.github.com/search/repositories?&order=desc&${inputInfo}`)
+      .then(res =>
+        {
+          dispatch(fetchRepoData(res.data))
+          if(!languages) {
+          handleLanguages(res.data)
+          }
+        }
+      )
+      .catch(error => dispatch(fetchFailure(error)))
     } else {
       return(<section>provide keyword</section>)
     }
   }
   
-  function handleErrors(response) {
-    if (!response.ok) {
-      throw Error(response.statusText);
-    }
-    return response.json();
+  const handleLanguages = async (data) => {
+    console.log(data)
+    if(data.items) {
+    const allLanguagesFromRepos = data.items.reduce((allLanguages, oneRepo) => {
+        if(!allLanguages[oneRepo.language] && oneRepo.language != null) {
+
+          allLanguages[oneRepo.language] = 0
+        };
+        if(oneRepo.language != null) {
+        allLanguages[oneRepo.language] += 1;
+        }
+      return allLanguages;
+    }, {})
+    await setLanguages(allLanguagesFromRepos)
+  }
   }
 
   const handleChange = (e) => {
-    e.preventDefault()
+    e.preventDefault() 
+    if(!e.target.value) {setQuery({...query, [e.target.name]: ''})}
     let inputPhrase = e.target.value;
+    
     let formattedPhrase = inputPhrase.split(' ').join("+")
     console.log(formattedPhrase)
-    setQuery({...query, [e.target.name]: e.target.value})
-    if(e.target.name === "keywords") {
-      setBtnDisabled(!e.target.value)
+    setQuery({...query, [e.target.name]: inputPhrase})
+  }
+
+  const handleSelectSort = async (e) => {
+    e.preventDefault();
+    console.log("target " + e.target.value)
+    setQuery({...query, [e.target.name]: e.target.value});
+    // dispatch(setQueries(query));
     }
-  }
-
-  const handleSortChange = (e) => {
-    e.preventDefault()
-    setQuery({...query, sortType: e.target.value})
-    dispatch(setQueries(query))
-    // validateQuery()
-  }
-
+    // console.log(query)
+    // fetchData()
+  // }
+    const cleanQueries = () => {
+      setQuery({...query,
+        language: ''
+      })
+      setLanguages(null)
+    }
   const handleSubmit = (e) => {
-    e.preventDefault()
-    console.log("I ma")
-    dispatch(setQueries(query))
-    validateQuery()
-    fetchData()
+    e.preventDefault();
+    dispatch(setQueries(query));
+    if(!query.keywords) {
+      dispatch(fetchRepoData([]))
+      cleanQueries()
+    }
+    cleanQueries()
   }
+  
+useEffect(async() => {
+   fetchData()
+   await repos
+}, [keywords])
+
+useEffect(() => {
+  // let infoData = `&q=${keywords}+language:${language}&sort=${sortType}`
+   fetchData()
+  //  await repos
+}, [query])
 
   return (
     <section className='header-container'>
       <h1>RepoFinder</h1>
-      <form className="header-form" onSubmit={(e) => handleSubmit(e)}>
+      <form className="header-form" autoComplete="off" onSubmit={(e) => handleSubmit(e)}>
           <TextField id="standard-search" onChange={(e) => handleChange(e)} name={"keywords"} label="Search..." type="search" />
-          <TextField id="standard-search" onChange={(e) => handleChange(e)} name={"language"} label="Language..." type="search" />
-          <TextField id="standard-search" onChange={(e) => handleChange(e)} name={"page"} label="Page..." type="search" />
-          <Button disabled={btnDisabled} type="submit" color="primary">Submit</Button>
+          <Button type="submit" color="primary">Submit</Button>
       </form>
+      {!!repos.items &&
+      <>
+        <FormControl onSubmit={(e) => handleSubmit(e)}>
+        <InputLabel id="languages"></InputLabel>
+        <Select
+          labelId="languages"
+          id="language"
+          name="language"
+          displayEmpty
+          value={query.language}
+          onChange={(e) => handleSelectSort(e)}
+        >
+          <MenuItem value="">
+            <em>All Languages</em>
+          </MenuItem>
+          {
+           languages &&
+            Object.keys(languages).sort((a,b) => languages[b] - languages[a]).map(languageName => {
+              return(
+                <MenuItem key={`sort-${languageName}`}value={`${languageName}`}>{`${languageName}`}<span>{languages[languageName]}</span></MenuItem>
+              )
+            })
+          }
+        </Select>
+        <FormHelperText>Sort By</FormHelperText>
+      </FormControl>
       <FormControl onSubmit={(e) => handleSubmit(e)}>
         <InputLabel id="sort"></InputLabel>
         <Select
           labelId="sort"
-          id="sort"
+          id="sortType"
+          name="sortType"
           displayEmpty
           value={query.sortType}
-          onChange={(e) => handleSortChange(e)}
+          onChange={(e) => handleSelectSort(e)}
         >
           <MenuItem value="">
             <em>Best Match</em>
@@ -106,6 +164,8 @@ const [queryInfo, setQueryInfo] = useState()
         </Select>
         <FormHelperText>Sort By</FormHelperText>
       </FormControl>
+      </>
+      }
     </section>
   )
 }
