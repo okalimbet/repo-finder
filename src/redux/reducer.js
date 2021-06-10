@@ -3,6 +3,7 @@ export const FETCH_REPO_DETAILS = 'FETCH_REPO_DATA_DETAILS';
 export const FETCH_FAILURE = 'FETCH_FAILURE';
 export const FETCH_BEGIN = 'FETCH_BEGIN';
 export const SET_QUERIES = 'FETCH_SET_QUERIES';
+export const SET_USER_DATA = 'SET_USER_DATA';
 
 const initialState = {
   repos: [],
@@ -35,20 +36,27 @@ export default function reposReducer(state = initialState, action) {
         repos: action.payload.repos
       };
 
-      case FETCH_REPO_DETAILS:
+    case FETCH_REPO_DETAILS:
       return {
         ...state,
         loading: false,
         repoDetails: action.payload.details
       };
 
-      case SET_QUERIES:
+    case SET_QUERIES:
       return {
         ...state,
         language: action.payload.queries.language,
         page: action.payload.queries.page,
         keywords: action.payload.queries.keywords,
         sortType: action.payload.queries.sortType,
+      };
+
+    case SET_USER_DATA:
+      return {
+        ...state,
+        owner: action.payload.userInfo.owner,
+        repoName: action.payload.userInfo.repoName
       };
 
     case FETCH_FAILURE:

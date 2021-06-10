@@ -3,7 +3,7 @@ export const FETCH_REPO_DETAILS = 'FETCH_REPO_DATA_DETAILS';
 export const FETCH_FAILURE = 'FETCH_FAILURE';
 export const FETCH_BEGIN = 'FETCH_BEGIN';
 export const SET_QUERIES = 'FETCH_SET_QUERIES';
-
+export const SET_USER_DATA = 'SET_USER_DATA';
 
 export const fetchRepoData = (repos) => ({
   type: FETCH_REPO_DATA,
@@ -27,5 +27,10 @@ export const fetchFailure = error => ({
 
 export const fetchBegin = (loading) => ({
   type: FETCH_BEGIN,
-  payload: {loading}
+  payload: { loading }
+});
+
+export const setUserData = (userInfo) => ({
+  type: SET_USER_DATA,
+  payload: { userInfo }
 });
