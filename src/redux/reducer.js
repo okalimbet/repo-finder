@@ -12,7 +12,7 @@ const initialState = {
   repoName: '',
   sortType: '',
   language: '',
-  keywords: '',
+  keyword: '',
   loading: false,
   error: null
 };

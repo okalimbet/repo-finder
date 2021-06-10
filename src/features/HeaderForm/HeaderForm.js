@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 import './HeaderForm.css'
-import {fetchBegin, fetchFailure, fetchRepoData, setQueries} from '../../redux/actions';
+import { makeStyles } from '@material-ui/core/styles';
+import { fetchBegin, fetchFailure, fetchRepoData, setQueries } from '../../redux/actions';
+import { baseUrl } from '../../apiCalls'
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -9,103 +12,169 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Select from '@material-ui/core/Select';
-import axios from "axios";
+import Pagination from '@material-ui/lab/Pagination';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      marginTop: theme.spacing(2),
+    },
+  },
+}));
 
 const HeaderForm = () => {
   const [query, setQuery] = useState({
     keywords: '',
     sortType: '',
     language: '',
-    page: ''
+    page: 1
   });
-const [btnDisabled, setBtnDisabled] = useState(true)
-const [queryInfo, setQueryInfo] = useState()
-
+  const classes = useStyles();
+  const [languages, setLanguages] = useState();
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  const repos = useSelector(state => state.repos);
   const keywords = useSelector(state => state.keywords);
-  const language = useSelector(state => state.language);
-  const validateQuery = () => {
-    let info = {}
-      info.keywords=`&q=${query.keywords}` || ``;
-      info.language = `+language:${query.language}` || ``;
-      info.sortType = `&sort=${query.keywords}` || ``;
-    setQueryInfo(info)
-  }
 
-  const fetchData = async () => {
-    let results = []
+  //For the error catching and loading screens
+  // const loading = useSelector(state => state.loading);
+  // const error = useSelector(state => state.error);
+
+  const fetchData = async (page=1) => {
     if(keywords) {
-    results = Object.values(queryInfo).join('')
-
-    dispatch(fetchBegin());
-    await axios.get(`https://api.github.com/search/repositories?&order=desc${results}`)
-      .then(handleErrors)
-      .then(res => dispatch(fetchRepoData(res.data))
-      ).catch(error => dispatch(fetchFailure(error)))
-    // }
+      let nameInput = !keywords ? '' : `&q=${keywords}`;
+      let languageInput = !query.language ? '' : `+language:${query.language}`;
+      let sortTypeInput = !query.sortType ? '' : `&sort=${query.sortType}`;
+      let pageInput = `&page=${query.page}`;
+      let inputInfo = nameInput+languageInput+pageInput+sortTypeInput;
+      dispatch(fetchBegin(true));
+      await axios.get(`${baseUrl}${inputInfo}`)
+        .then(res =>
+          {
+            dispatch(fetchRepoData(res.data))
+            if(!languages) {
+            handleLanguages(res.data)
+            }
+          }
+        )
+        .catch(error => dispatch(fetchFailure(error)));
     } else {
-      return(<section>provide keyword</section>)
+      return;
     }
   }
   
-  function handleErrors(response) {
-    if (!response.ok) {
-      throw Error(response.statusText);
+  const handleLanguages = async (data) => {
+    if(data.items) {
+      const allLanguagesFromRepos = data.items.reduce((allLanguages, oneRepo) => {
+          if(!allLanguages[oneRepo.language] && oneRepo.language != null) {
+            allLanguages[oneRepo.language] = 0
+          };
+          if(oneRepo.language != null) {
+          allLanguages[oneRepo.language] += 1;
+          }
+        return allLanguages;
+      }, {})
+      await setLanguages(allLanguagesFromRepos)
     }
-    return response.json();
   }
 
   const handleChange = (e) => {
-    e.preventDefault()
+    e.preventDefault() 
     let inputPhrase = e.target.value;
-    let formattedPhrase = inputPhrase.split(' ').join("+")
-    console.log(formattedPhrase)
-    setQuery({...query, [e.target.name]: e.target.value})
-    if(e.target.name === "keywords") {
-      setBtnDisabled(!e.target.value)
+    let associatedQuery = e.target.name;
+
+    if(!inputPhrase) { 
+      setQuery({...query, [associatedQuery]: ''})
     }
+    setQuery({...query, [associatedQuery]: inputPhrase})
   }
 
-  const handleSortChange = (e) => {
-    e.preventDefault()
-    setQuery({...query, sortType: e.target.value})
-    dispatch(setQueries(query))
-    // validateQuery()
+  const handleSelectSort = async (e) => {
+    e.preventDefault();
+    let inputFilter = e.target.value;
+    let associatedQuery = e.target.name;
+    setQuery({...query, [associatedQuery]: inputFilter});
   }
 
+    const cleanQueries = () => {
+      setQuery({...query,
+        language: '',
+        page: 1
+      })
+      setLanguages(null)
+    }
   const handleSubmit = (e) => {
-    e.preventDefault()
-    console.log("I ma")
-    dispatch(setQueries(query))
-    validateQuery()
-    fetchData()
+    e.preventDefault();
+    dispatch(setQueries(query));
+    if(!query.keywords) {
+      dispatch(fetchRepoData([]))
+      cleanQueries()
+    }
+    cleanQueries()
   }
+  const handlePageChange = (e, value) => {
+    setQuery({...query, page: value})
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [query])
 
   return (
     <section className='header-container'>
       <h1>RepoFinder</h1>
-      <form className="header-form" onSubmit={(e) => handleSubmit(e)}>
+      <form className="header-form" autoComplete="off" onSubmit={(e) => handleSubmit(e)}>
           <TextField id="standard-search" onChange={(e) => handleChange(e)} name={"keywords"} label="Search..." type="search" />
-          <TextField id="standard-search" onChange={(e) => handleChange(e)} name={"language"} label="Language..." type="search" />
-          <TextField id="standard-search" onChange={(e) => handleChange(e)} name={"page"} label="Page..." type="search" />
-          <Button disabled={btnDisabled} type="submit" color="primary">Submit</Button>
+          <Button type="submit" color="primary">Submit</Button>
       </form>
-      <FormControl onSubmit={(e) => handleSubmit(e)}>
-        <InputLabel id="sort"></InputLabel>
-        <Select
-          labelId="sort"
-          id="sort"
-          displayEmpty
-          value={query.sortType}
-          onChange={(e) => handleSortChange(e)}
-        >
-          <MenuItem value="">
-            <em>Best Match</em>
-          </MenuItem>
-          <MenuItem value={"stars"}>Stars</MenuItem>
-        </Select>
-        <FormHelperText>Sort By</FormHelperText>
-      </FormControl>
+      {!!repos.items &&
+        <div className="sort-filter-container">
+          <div>
+            <FormControl className="form filter-wrapper" onSubmit={(e) => handleSubmit(e)}>
+            <InputLabel id="languages"></InputLabel>
+            <Select
+              labelId="languages"
+              id="language"
+              name="language"
+              displayEmpty
+              value={query.language}
+              onChange={(e) => handleSelectSort(e)}
+            >
+              <MenuItem value="">
+                <em>All Languages</em>
+              </MenuItem>
+              {
+                languages &&
+                  Object.keys(languages).sort((a,b) => languages[b] - languages[a]).map(languageName => {
+                    return(
+                      <MenuItem key={`sort-${languageName}`}value={`${languageName}`}>{`${languageName}`}<span>{languages[languageName]}</span></MenuItem>
+                    )
+                  })
+              }
+            </Select>
+            <FormHelperText>Sort By</FormHelperText>
+            </FormControl>
+            <FormControl className="form sort-wrapper" onSubmit={(e) => handleSubmit(e)}>
+              <InputLabel id="sort"></InputLabel>
+              <Select
+                labelId="sort"
+                id="sortType"
+                name="sortType"
+                displayEmpty
+                value={query.sortType}
+                onChange={(e) => handleSelectSort(e)}
+              >
+                <MenuItem value="">
+                  <em>Best Match</em>
+                </MenuItem>
+                <MenuItem value={"stars"}>Stars</MenuItem>
+              </Select>
+              <FormHelperText>Sort By</FormHelperText>
+            </FormControl>
+          </div>
+          <Pagination count={Math.floor(repos.total_count/30)+1} page={query.page} onChange={handlePageChange} variant="outlined" shape="rounded" />
+        </div>
+      }
     </section>
   )
 }
