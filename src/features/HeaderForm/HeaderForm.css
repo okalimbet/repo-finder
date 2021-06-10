@@ -8,7 +8,7 @@
 
 .header-form {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   width: 100%;
   align-items: flex-end;
 }
