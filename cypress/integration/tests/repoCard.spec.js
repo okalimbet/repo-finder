@@ -34,7 +34,8 @@ context('Cypress.Commands', () => {
     
     cy.get('.MuiPagination-ul')
       .contains(':nth-child(5) > .MuiButtonBase-root', 34)
-    cy.get('.MuiPagination-ul').should('exist')
+    cy.get('.MuiPagination-ul')
+      .should('exist')
       .contains(':nth-child(6) > .MuiButtonBase-root', 35)
       .should('not.exist')
   })

@@ -22,7 +22,8 @@ context('Cypress.Commands', () => {
       .type("woman in code");
 
     cy.get(`[data-cy=submit]`)
-      .should('be.visible').click();  
+      .should('be.visible')
+      .click();  
 
     cy.get(`[data-cy=loading-container]`)
       .should('be.visible')
@@ -64,6 +65,8 @@ context('Cypress.Commands', () => {
       .click();  
 
     cy.get(`[data-cy=select-sort]`)
-    cy.get(`#sortType`).contains('Best Match').should('be.visible')
+    cy.get(`#sortType`)
+      .contains('Best Match')
+      .should('be.visible')
   })
 })
