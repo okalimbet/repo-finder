@@ -23,7 +23,7 @@ Create a simple search tool that helps to find repositories using GitHub Search 
 
 ## Goals
 
-My personal goal was to push my abilities to create something simple yet elegant and functional in a short period of time using website best practices.
+My personal goal was to push my abilities to create something simple yet elegant and functional in a short time using website best practices.
 
 ## Technologies And Tools
 
@@ -54,7 +54,7 @@ Open http://localhost:3000 to view it in the browser.
 
 ### Functionality
 
-Upon landing on the website users can use a search bar to start looking for repositories. When the results are found, the website offers extra filters that can help narrow down the list. The API offers limited amount of results - 1000. The result of the search contains a list of repositories that contain general information. Each card can be clicked, this action would takes users to a more detailed page where they can find description of the project, link to a github.
+Upon landing on the website users can use a search bar to start looking for repositories. When the results are found, the website offers extra filters that can help to narrow down the list. The API offers a limited amount of results - 1000. The result of the search contains a list of repositories that contain general information. Each card can be clicked, this action would take users to a more detailed page where they can find a description of the project, link to a GitHub.
 
 ## Roadmap
 
