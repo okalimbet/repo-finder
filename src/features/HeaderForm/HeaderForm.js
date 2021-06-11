@@ -33,6 +33,7 @@ const HeaderForm = () => {
   const loading = useSelector(state => state.loading);
   const error = useSelector(state => state.error);
 
+  //methos to fetch repositories based on search and filters
   const fetchData = async () => {
     if(keywords) {
       let nameInput = !keywords ? '' : `&q=${keywords}`;
@@ -56,6 +57,7 @@ const HeaderForm = () => {
     }
   }
   
+  //get a list of possible languges from limited 30 items per page
   const handleLanguages = async (data) => {
     if(data.items) {
       const allLanguagesFromRepos = data.items.reduce((allLanguages, oneRepo) => {
@@ -71,32 +73,39 @@ const HeaderForm = () => {
     }
   }
 
+  //handle change of keywords
   const handleChange = (e) => {
     e.preventDefault() 
     let inputPhrase = e.target.value;
-    let associatedQuery = e.target.name;
     if(!inputPhrase) { 
       setKeywordInput('')
     }
     setKeywordInput(inputPhrase)
   }
 
+  //handle filter by language and sort
   const handleSelectSort = async (e) => {
     e.preventDefault();
     let inputFilter = e.target.value;
     let associatedQuery = e.target.name;
-    setQuery({...query, [associatedQuery]: inputFilter});
+    dispatch(setQueries({...query, page: 1}));
+    setQuery({...query, 
+      [associatedQuery]: inputFilter,
+      page: 1
+    });
   }
 
-    const cleanQueries = () => {
-      setQuery({...query,
-        language: '',
-        sortType: '',
-        page: 1
-      })
-      setLanguages(null)
-    }
+  //clean queries and languges
+  const cleanQueries = () => {
+    setQuery({...query,
+      language: '',
+      sortType: '',
+      page: 1
+    })
+    setLanguages(null)
+  }
 
+  //handle submit of keywords
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(setKeywords({keyword: keywordInput}));
@@ -108,6 +117,7 @@ const HeaderForm = () => {
     cleanQueries()
   }
 
+  //handle page change in pagination
   const handlePageChange = (e, value) => {
     setQuery({...query, page: value});
     dispatch(setQueries({...query, page: value}));
@@ -129,16 +139,16 @@ const HeaderForm = () => {
     return (
       <>
       {loading === false ? (
-        <section className='header-container'>
+        <section data-cy="header-wrap" className='header-container'>
           <h1>RepoFinder</h1>
-          <form className="header-form" autoComplete="off" onSubmit={(e) => handleSubmit(e)}>
-              <TextField id="standard-search" onChange={(e) => handleChange(e)} name={"keywords"} label="Search..." type="search" />
-              <Button type="submit" color="primary">Submit</Button>
+          <form data-cy="search-form" className="header-form" autoComplete="off" onSubmit={(e) => handleSubmit(e)}>
+              <TextField helperText="Search..." required data-cy="submit-input" id="standard-search" onChange={(e) => handleChange(e)} name={"keywords"} type="search" />
+              <Button data-cy="submit" type="submit" color="primary">Submit</Button>
           </form>
           {!!repos.items &&
-            <div className="sort-filter-container">
+            <div data-cy="sort-filter-wrap" className="sort-filter-container">
               <div>
-                <FormControl className="form filter-wrapper" onSubmit={(e) => handleSubmit(e)}>
+                <FormControl data-cy="select-languages-form" className="form filter-wrapper">
                 <InputLabel id="languages"></InputLabel>
                 <Select
                   labelId="languages"
@@ -147,6 +157,7 @@ const HeaderForm = () => {
                   displayEmpty
                   value={query.language}
                   onChange={(e) => handleSelectSort(e)}
+                  data-cy="select-language"
                 >
                   <MenuItem value="">
                     <em>All Languages</em>
@@ -155,14 +166,14 @@ const HeaderForm = () => {
                     languages &&
                       Object.keys(languages).sort((a,b) => languages[b] - languages[a]).map(languageName => {
                         return(
-                          <MenuItem className="menu-item" key={`sort-${languageName}`} value={`${languageName}`}>{`${languageName}`}<span className="filter-lan-num">{languages[languageName]}</span></MenuItem>
+                          <MenuItem className="menu-item" key={`sort-${languageName}`} value={`${languageName}`}>{`${languageName}`}</MenuItem>
                         )
                       })
                   }
                 </Select>
-                <FormHelperText>Sort By</FormHelperText>
+                <FormHelperText>Fitler by</FormHelperText>
                 </FormControl>
-                <FormControl className="form sort-wrapper" onSubmit={(e) => handleSubmit(e)}>
+                <FormControl data-cy="sort-form" className="form sort-wrapper">
                   <InputLabel id="sort"></InputLabel>
                   <Select
                     labelId="sort"
@@ -171,16 +182,17 @@ const HeaderForm = () => {
                     displayEmpty
                     value={query.sortType}
                     onChange={(e) => handleSelectSort(e)}
+                    data-cy="select-sort"
                   >
-                    <MenuItem value="">
+                    <MenuItem data-cy="best-match" value="">
                       <em>Best Match</em>
                     </MenuItem>
-                    <MenuItem value={"stars"}>Stars</MenuItem>
+                    <MenuItem data-cy="stars" value={"stars"}>Stars</MenuItem>
                   </Select>
-                  <FormHelperText>Sort By</FormHelperText>
+                  <FormHelperText>Sort by </FormHelperText>
                 </FormControl>
               </div>
-              <Pagination count={repos.total_count > 1000 ? Math.floor(1000/30)+1 : Math.floor(repos.total_count/30)+1} page={parseInt(page)} onChange={handlePageChange} variant="outlined" shape="rounded" />
+              <Pagination className="pagination" data-cy="pagination" count={repos.total_count > 1000 ? Math.floor(1000/30)+1 : Math.floor(repos.total_count/30)+1} page={parseInt(page)} onChange={handlePageChange} variant="outlined" shape="rounded" />
             </div>
           }
         </section>) : (

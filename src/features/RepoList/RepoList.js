@@ -28,14 +28,15 @@ const useStyles = makeStyles({
   },
 });
 
-const RepoList = (props) => {
+const RepoList = () => {
 
   const classes = useStyles();
-  const repos = useSelector(state => state.repos);
   const dispatch = useDispatch();
+  const repos = useSelector(state => state.repos);
   const loading = useSelector(state => state.loading);
   const error = useSelector(state => state.error);
 
+  //store owner and repo upon clicking on a repo card
   const handleRepoClick = (e, repoName, owner) => {
     dispatch(setUserData({
       owner,
@@ -51,7 +52,7 @@ const RepoList = (props) => {
     return(
       <>
         {loading === false ? (
-          <section className="repo-list-container">
+          <section data-cy="repo-list-container" className="repo-list-container">
             <h2>Total Count: {repos.total_count}</h2>
             {
               repos.total_count > 1000 && 
@@ -61,16 +62,16 @@ const RepoList = (props) => {
               {
                 repos.items.map(oneRepo => {
                   return(
-                    <Card key={`card-${oneRepo.id}`} onClick={(e) => handleRepoClick(e, oneRepo.name, oneRepo.owner.login)} className={classes.root}>
+                    <Card data-cy="repo-card" key={`card-${oneRepo.id}`} onClick={(e) => handleRepoClick(e, oneRepo.name, oneRepo.owner.login)} className={classes.root}>
                       <CardContent >
                       <Typography className="card-repo-name" noWrap={false} display="inline" variant="h5" component="h3">{oneRepo.name}</Typography>
                       <Typography className={classes.title} color="textSecondary" gutterBottom>{oneRepo.owner.login}</Typography>
                       <div className="stargazing-container">
                         <div className="stargazing-box">
-                          <StarIcon/>
+                          <StarIcon data-cy="star-icon"/>
                           <Typography className="small-card-details" variant="body2" component="p">{oneRepo.stargazers_count}</Typography>
                         </div>
-                        <Typography className="small-card-details" variant="body2" component="p">{oneRepo.language}</Typography>
+                        <Typography className="small-card-details" variant="body2" component="p">{oneRepo.language ? oneRepo.language : "Unknown"}</Typography>
                       </div>                 
                       </CardContent>
                     </Card>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from '@material-ui/core/styles';
 import './SingleRepoPreview.css';
@@ -37,13 +37,14 @@ const SingleRepoPreview = () => {
   const loading = useSelector(state => state.loading);
   const error = useSelector(state => state.error);
 
+  //fetch information for a chosen repository
   const fetchSingleRepo = async (ownerInfo, repoInfo) => {
     if(owner && repoName) {
       dispatch(fetchBegin(true));
       await axios.get(`${baseUrl}repos/${ownerInfo}/${repoInfo}`)
         .then(res =>
           {
-            dispatch(fetchRepoDataDetails(res.data))
+            dispatch(fetchRepoDataDetails(res.data));
           }
         )
         .catch(error => dispatch(fetchFailure(error)));
@@ -52,16 +53,17 @@ const SingleRepoPreview = () => {
     }
   }
 
+  //handle clicking event when the arrow button is pressed to return user back to the main page
   const handleReturnClick = () => {
-    dispatch(setUserData({owner: '', repoName: ''}))
-    dispatch(fetchRepoDataDetails(null))
+    dispatch(setUserData({owner: '', repoName: ''}));
+    dispatch(fetchRepoDataDetails(null));
   }
 
   useEffect(() => {
     if(owner && repoName) {
-      fetchSingleRepo(owner, repoName)
+      fetchSingleRepo(owner, repoName);
     }
-    return dispatch(fetchRepoDataDetails(null))
+    return dispatch(fetchRepoDataDetails(null));
   }, [owner])
 
   if(error) {
@@ -72,7 +74,7 @@ const SingleRepoPreview = () => {
   return(
     <>
       {loading === false ? (
-        <section className="single-repo-container">
+        <section data-cy="single-repo-container" className="single-repo-container">
           <div>
             <div className="single-repo-wrapper">
               <h2 className="repo-fullname">{repoDetails.full_name}</h2>
@@ -88,13 +90,13 @@ const SingleRepoPreview = () => {
                     </div>
                     <Typography className="repo-details" variant="body2" component="p">Language: {repoDetails.language}</Typography>
                   </div> 
-                  <div className="github-icon">
+                  <div data-cy="github-icon" className="github-icon">
                     <a className="github-icon-link" href={`${repoDetails.html_url}`}><GitHubIcon/></a>
                   </div>       
               </Paper>
             </div>
             <div className="arrow-back-circle">
-              <ArrowBackRoundedIcon onClick={handleReturnClick} className="arrow-back"/>
+              <ArrowBackRoundedIcon data-cy="arrow-button" onClick={handleReturnClick} className="arrow-back"/>
             </div>
           </div>
         </section> ) : (

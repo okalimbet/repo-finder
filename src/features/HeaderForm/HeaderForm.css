@@ -26,6 +26,7 @@
   display: flex;
   align-items: flex-end;  
   margin-left: 0.5em;
+  margin-bottom: 1em;
 }
 
 .sort-filter-container {
@@ -51,4 +52,8 @@ div.form {
 li.menu-item {
   display: flex;
   justify-content: space-between;
+}
+
+nav.pagination > ul > li > button:hover {
+  background-color: #f0cfcf;
 }
