@@ -13,7 +13,7 @@
 * [Goals](#goals)
 * [Technologies And Tools](#technologies-and-tools)
 * [Setup](#setup)
-* [ScreenShots and Demos](#screenshots-and-demos)
+* [Functionality](#functionality)
 * [Roadmap](#roadmap)
 * [Credits](#credits)
 
