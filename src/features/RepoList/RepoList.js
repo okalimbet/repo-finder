@@ -70,7 +70,7 @@ const RepoList = (props) => {
                           <StarIcon data-cy="star-icon"/>
                           <Typography className="small-card-details" variant="body2" component="p">{oneRepo.stargazers_count}</Typography>
                         </div>
-                        <Typography className="small-card-details" variant="body2" component="p">{oneRepo.language}</Typography>
+                        <Typography className="small-card-details" variant="body2" component="p">{oneRepo.language ? oneRepo.language : "Unknown"}</Typography>
                       </div>                 
                       </CardContent>
                     </Card>
