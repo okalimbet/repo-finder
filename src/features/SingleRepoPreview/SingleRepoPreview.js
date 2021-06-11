@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from '@material-ui/core/styles';
 import './SingleRepoPreview.css';
@@ -37,13 +37,14 @@ const SingleRepoPreview = () => {
   const loading = useSelector(state => state.loading);
   const error = useSelector(state => state.error);
 
+  //fetch information for a chosen repository
   const fetchSingleRepo = async (ownerInfo, repoInfo) => {
     if(owner && repoName) {
       dispatch(fetchBegin(true));
       await axios.get(`${baseUrl}repos/${ownerInfo}/${repoInfo}`)
         .then(res =>
           {
-            dispatch(fetchRepoDataDetails(res.data))
+            dispatch(fetchRepoDataDetails(res.data));
           }
         )
         .catch(error => dispatch(fetchFailure(error)));
@@ -52,16 +53,17 @@ const SingleRepoPreview = () => {
     }
   }
 
+  //handle clicking event when the arrow button is pressed to return user back to the main page
   const handleReturnClick = () => {
-    dispatch(setUserData({owner: '', repoName: ''}))
-    dispatch(fetchRepoDataDetails(null))
+    dispatch(setUserData({owner: '', repoName: ''}));
+    dispatch(fetchRepoDataDetails(null));
   }
 
   useEffect(() => {
     if(owner && repoName) {
-      fetchSingleRepo(owner, repoName)
+      fetchSingleRepo(owner, repoName);
     }
-    return dispatch(fetchRepoDataDetails(null))
+    return dispatch(fetchRepoDataDetails(null));
   }, [owner])
 
   if(error) {

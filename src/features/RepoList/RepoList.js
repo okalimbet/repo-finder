@@ -28,14 +28,15 @@ const useStyles = makeStyles({
   },
 });
 
-const RepoList = (props) => {
+const RepoList = () => {
 
   const classes = useStyles();
-  const repos = useSelector(state => state.repos);
   const dispatch = useDispatch();
+  const repos = useSelector(state => state.repos);
   const loading = useSelector(state => state.loading);
   const error = useSelector(state => state.error);
 
+  //store owner and repo upon clicking on a repo card
   const handleRepoClick = (e, repoName, owner) => {
     dispatch(setUserData({
       owner,

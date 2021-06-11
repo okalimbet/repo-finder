@@ -104,6 +104,7 @@ const HeaderForm = () => {
     })
     setLanguages(null)
   }
+
   //handle submit of keywords
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -117,6 +118,7 @@ const HeaderForm = () => {
     cleanQueries()
   }
 
+  //handle page change in pagination
   const handlePageChange = (e, value) => {
     setQuery({...query, page: value});
     dispatch(setQueries({...query, page: value}));
@@ -147,7 +149,7 @@ const HeaderForm = () => {
           {!!repos.items &&
             <div data-cy="sort-filter-wrap" className="sort-filter-container">
               <div>
-                <FormControl data-cy="select-languages-form" className="form filter-wrapper" onSubmit={(e) => handleSubmit(e)}>
+                <FormControl data-cy="select-languages-form" className="form filter-wrapper">
                 <InputLabel id="languages"></InputLabel>
                 <Select
                   labelId="languages"
@@ -172,7 +174,7 @@ const HeaderForm = () => {
                 </Select>
                 <FormHelperText>Fitler by</FormHelperText>
                 </FormControl>
-                <FormControl data-cy="sort-form" className="form sort-wrapper" onSubmit={(e) => handleSubmit(e)}>
+                <FormControl data-cy="sort-form" className="form sort-wrapper">
                   <InputLabel id="sort"></InputLabel>
                   <Select
                     labelId="sort"
