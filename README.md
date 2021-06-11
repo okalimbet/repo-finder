@@ -35,15 +35,15 @@ My personal goal was to push my abilities to create something simple yet elegant
 
 ## Setup
 
-After one person has gone through the steps of cloning down this repo and editing the remote, everyone should clone down the repo.
+Clone down this repo.
 
-Then install the library dependencies. Run:
+To install the library dependencies run:
 
 ```bash
 npm install
 ```
 
-In the project directory, you can run:
+In the project directory run:
 
 ```bash
 npm start
@@ -58,9 +58,9 @@ Upon landing on the website users can use a search bar to start looking for repo
 
 ## Roadmap
 
-* Improve search of langiages. Right now it only displays languages based on given array of 30 items.
-* Add dark theme
-* Add more data to single repo page
+* Improve search of languages. Right now it only displays languages based on a given array of 30 items.
+* Add a dark theme
+* Add more data to a single repo page
 
 ## Credits
 
