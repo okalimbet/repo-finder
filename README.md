@@ -67,5 +67,5 @@ Upon landing on the website users can use a search bar to start looking for repo
 **Olga Morgan**
 [GitHub Profile](https://github.com/scripka)
 
-<img src="https://avatars2.githubusercontent.com/u/68264128?s=460&u=5e1c7200a4a593246ef55c53a1cf0e71b5f2adfa&v=4" alt="Olga Morgan"
+<img src="https://avatars0.githubusercontent.com/u/66269306?s=400&u=b59f8ccc1002269319d952aa028ee270629b2ead&v=4" alt="Olga Morgan"
  width="150" height="auto" />\
