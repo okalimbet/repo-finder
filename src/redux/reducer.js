@@ -36,6 +36,7 @@ export default function reposReducer(state = initialState, action) {
         repos: action.payload.repos
       };
 
+    // store single repo fetched data
     case FETCH_REPO_DETAILS:
       return {
         ...state,
@@ -43,6 +44,7 @@ export default function reposReducer(state = initialState, action) {
         repoDetails: action.payload.details
       };
 
+    // store queries to fetch information: page, language, and sort
     case SET_QUERIES:
       return {
         ...state,
@@ -51,12 +53,14 @@ export default function reposReducer(state = initialState, action) {
         sortType: action.payload.queries.sortType,
       };
 
+    // store keywords from search input
     case SET_KEYWORDS:
       return {
           ...state,
           keyword: action.payload.keyword.keyword,
       };
 
+    // store owner and repo name info
     case SET_USER_DATA:
       return {
         ...state,
