@@ -109,7 +109,6 @@ const HeaderForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(setKeywords({keyword: keywordInput}));
-    console.log(e.target.value)
     if(!keywordInput) {
       dispatch(fetchRepoData([]))
       dispatch(setKeywords(''))
