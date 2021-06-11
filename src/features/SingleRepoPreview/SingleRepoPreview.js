@@ -72,7 +72,7 @@ const SingleRepoPreview = () => {
   return(
     <>
       {loading === false ? (
-        <section className="single-repo-container">
+        <section data-cy="single-repo-container" className="single-repo-container">
           <div>
             <div className="single-repo-wrapper">
               <h2 className="repo-fullname">{repoDetails.full_name}</h2>
@@ -88,13 +88,13 @@ const SingleRepoPreview = () => {
                     </div>
                     <Typography className="repo-details" variant="body2" component="p">Language: {repoDetails.language}</Typography>
                   </div> 
-                  <div className="github-icon">
+                  <div data-cy="github-icon" className="github-icon">
                     <a className="github-icon-link" href={`${repoDetails.html_url}`}><GitHubIcon/></a>
                   </div>       
               </Paper>
             </div>
             <div className="arrow-back-circle">
-              <ArrowBackRoundedIcon onClick={handleReturnClick} className="arrow-back"/>
+              <ArrowBackRoundedIcon data-cy="arrow-button" onClick={handleReturnClick} className="arrow-back"/>
             </div>
           </div>
         </section> ) : (
