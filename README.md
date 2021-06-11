@@ -1,44 +1,71 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+# RepoFinder
+### [RepoFinder](https://github.com/scripka/repo-finder/pull/5)
 
-## Available Scripts
+---
+
+<img width="860" alt="Screen Shot 2021-06-11 at 12 34 26 AM" src="https://user-images.githubusercontent.com/66269306/121641794-e0a27300-ca4c-11eb-8160-dbf867643147.png">
+
+---
+
+## Table of Contents
+
+* [Project Overview](#project-overview)
+* [Goals](#goals)
+* [Technologies And Tools](#technologies-and-tools)
+* [Setup](#setup)
+* [ScreenShots and Demos](#screenshots-and-demos)
+* [Roadmap](#roadmap)
+* [Credits](#credits)
+
+## Project Overview
+
+Create a simple search tool that helps to find repositories using GitHub Search API. Users can search by keywords, filter by laguage, or sort by best match/stars
+
+## Goals
+
+My personal goal was to push my abilities to create something simple yet elegant and functional in a short period of time using website best practices.
+
+## Technologies And Tools
+
+* React
+* Redux
+* CSS
+* Material UI
+* Cypress
+
+## Setup
+
+After one person has gone through the steps of cloning down this repo and editing the remote, everyone should clone down the repo.
+
+Then install the library dependencies. Run:
+
+```bash
+npm install
+```
 
 In the project directory, you can run:
 
-### `npm start`
+```bash
+npm start
+```
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Runs the app in the development mode.
+Open http://localhost:3000 to view it in the browser.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+### Functionality
 
-### `npm test`
+Upon landing on the website users can use a search bar to start looking for repositories. When the results are found, the website offers extra filters that can help narrow down the list. The API offers limited amount of results - 1000. The result of the search contains a list of repositories that contain general information. Each card can be clicked, this action would takes users to a more detailed page where they can find description of the project, link to a github.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Roadmap
 
-### `npm run build`
+* Improve search of langiages. Right now it only displays languages based on given array of 30 items.
+* Add dark theme
+* Add more data to single repo page
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Credits
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+**Olga Morgan**
+[GitHub Profile](https://github.com/scripka)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+<img src="https://avatars2.githubusercontent.com/u/68264128?s=460&u=5e1c7200a4a593246ef55c53a1cf0e71b5f2adfa&v=4" alt="Olga Morgan"
+ width="150" height="auto" />\
