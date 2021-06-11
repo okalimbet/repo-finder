@@ -87,6 +87,7 @@ p.repo-details {
 
 .arrow-back-circle:hover {
   transform: scale(1.1);
+  background-color: #E5EBD7;
 }
 
 @media (max-width: 700px) {
